@@ -1,6 +1,6 @@
 local module = {}
 
-module.instance = require(script.Instance);
+-- module.instance = require(script.Instance);
 
 function module.convert_object_to_code(root: Instance)
 	local output = "local vars = {};\nvars.root = Instance.new(\""..root.ClassName.."\");\n";

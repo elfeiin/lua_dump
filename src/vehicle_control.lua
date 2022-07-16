@@ -2,7 +2,7 @@ local rep_stor = game:GetService("ReplicatedStorage");
 local sss = game:GetService("ServerScriptService");
 local common = require(sss.Common);
 
-function drive(vehicle_name, seat_part, drive_motors_folder, drive_motors, steer_motors)
+function drive(vehicle_name, seat_part, drive_motors, steer_motors)
 	local tuning = common.TUNING[vehicle_name];
 	for _,v in ipairs(drive_motors) do
 		local side = 1;
@@ -40,6 +40,7 @@ function drive(vehicle_name, seat_part, drive_motors_folder, drive_motors, steer
 	end
 end
 
+-- TODO: Give player credit for kills
 function aim_and_fire_50cal(fifty_cal, motors, target, player, ignore)
 	if target ~= nil then
 		if motors ~= nil then
@@ -67,7 +68,7 @@ function aim_and_fire_50cal(fifty_cal, motors, target, player, ignore)
 				);
 				bullet.vel_force.Force = bullet.CFrame.lookVector * bullet:GetMass() * common.BULLET_SPEED;
 				bullet.Parent = workspace;
-				--bullet:SetNetworkOwner(player);f
+				--bullet:SetNetworkOwner(player);
 				local world_cf = CFrame.lookAt(
 					fifty_cal.Chamber.CFrame:PointToWorldSpace(Vector3.new(0, 0, fifty_cal.Chamber.Size.Z)/2),
 					fifty_cal.Chamber.CFrame:PointToWorldSpace(
@@ -119,10 +120,11 @@ game.Players.PlayerAdded:Connect(function(player)
 					local fifty_cal = seat_part.Parent:FindFirstChild("FiftyCal");
 					local fifty_cal_motors_folder = (fifty_cal and fifty_cal:FindFirstChild("Motors")) or nil;
 					action = game:GetService("RunService").Heartbeat:Connect(function()
+						if seat_part == nil or seat_part.Parent == nil or drive_motors_folder == nil then
+							action:Disconnect();
+						end
 						if #drive_motors ~= 0 then
 							drive(seat_part.Parent.Name, seat_part, drive_motors_folder, drive_motors, steer_motors);
-						else
-							action:Disconnect()
 						end
 						if player:GetAttribute("fire_50cal") then
 							player:SetAttribute("fire_50cal", false);
