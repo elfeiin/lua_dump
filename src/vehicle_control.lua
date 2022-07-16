@@ -113,10 +113,10 @@ game.Players.PlayerAdded:Connect(function(player)
 					local drive_System = seat_part.Parent:FindFirstChild("DriveSystem");
 					-- Motors of the vehicle
 					local drive_motors_folder = drive_System:FindFirstChild("Motors");
-					local drive_motors = (drive_motors_folder or Instance.new("Accessory")):GetChildren();
+					local drive_motors = drive_motors_folder and drive_motors_folder:GetChildren() or {};
 					-- Whether or not this vehicle uses axle steering
 					local steer_motors_folder = drive_System:FindFirstChild("SteerMotors");
-					local steer_motors = (steer_motors_folder or Instance.new("Accessory")):GetChildren();
+					local steer_motors = steer_motors_folder and steer_motors_folder:GetChildren() or {};
 					local fifty_cal = seat_part.Parent:FindFirstChild("FiftyCal");
 					local fifty_cal_motors_folder = (fifty_cal and fifty_cal:FindFirstChild("Motors")) or nil;
 					action = game:GetService("RunService").Heartbeat:Connect(function()
