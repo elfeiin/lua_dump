@@ -124,7 +124,7 @@ game.Players.PlayerAdded:Connect(function(player)
 							action:Disconnect();
 						end
 						if #drive_motors ~= 0 then
-							drive(seat_part.Parent.Name, seat_part, drive_motors_folder, drive_motors, steer_motors);
+							drive(seat_part.Parent.Name, seat_part, drive_motors, steer_motors);
 						end
 						if player:GetAttribute("fire_50cal") then
 							player:SetAttribute("fire_50cal", false);
